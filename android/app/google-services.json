@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "817259790782",
+    "project_id": "arcanjos-app",
+    "storage_bucket": "arcanjos-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817259790782:android:be59cd6544c5032540b9ef",
+        "android_client_info": {
+          "package_name": "com.lordaval.arcanjosapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxzo8bkQhQr9Zj5CzN0joNR55EdkZ8cHE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
