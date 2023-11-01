@@ -1,23 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
+import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { auth } from '../../firebase';
 import { useState } from 'react';
-import { TouchableOpacity, StyleSheet, Text, TextInput, View, Alert } from 'react-native';
-import auth from '@react-native-firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth'
 
-export default function Auth() {
-
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   function handleLogin() {
-    setIsLoading(true);
-    auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        Alert.alert("Login", 'User account created & signed in!');
+    setIsLoading(true)
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user
+        alert('Login efetuado com sucesso')
       })
-      .catch(error => Alert.alert("Login", error.message))
-      .finally(() => setIsLoading(false));
+      .catch((error) => {
+        alert(error.message)
+      })
+      .finally(() => setIsLoading(false))
   }
 
   return (
@@ -32,16 +34,17 @@ export default function Auth() {
         </View>
         <View style={styles.field}>
           <Text style={styles.label}>Senha:</Text>
-          <TextInput onChangeText={setPassword} placeholder="******" style={styles.input} />
+          <TextInput onChangeText={setPassword} secureTextEntry placeholder="******" style={styles.input} />
         </View>
-        <TouchableOpacity onPress={handleLogin} style={{ width: '75%', borderRadius: 8, alignItems: 'center', padding: 10, backgroundColor: '#111', marginTop: 10 }}>
-          <Text style={{ color: '#fff', fontSize: 20 }}>Entrar</Text>
+        <TouchableOpacity onPress={handleLogin} style={{ width: '60%', borderRadius: 8, alignItems: 'center', padding: 10, backgroundColor: '#111', marginTop: 10 }}>
+          {isLoading ? <ActivityIndicator color={'#fff'} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}/> : <Text style={{ color: '#fff', fontSize: 20 }}>Entrar</Text>}
         </TouchableOpacity>
       </View>
       <StatusBar style="auto" />
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   screen: {
@@ -51,19 +54,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   container: {
+    width: '100%',
     display: 'flex',
+    flexDirection: 'column',
     padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 10,
-    width: '100%',
   },
   field: {
-    flexDirection: 'row', 
-    alignItems: 'center', 
+    flexDirection: 'column',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
-    gap: 10,
-    width: '90%',
+    gap: 4,
+    width: '60%',
   },
   label: {
     fontSize: 14,
@@ -71,7 +75,7 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     padding: 10,
-    flex: 1,
+    width: '100%',
     height: 36,
     borderRadius: 2,
     fontSize: 12,
