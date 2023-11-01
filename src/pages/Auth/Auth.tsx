@@ -1,7 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
-import { TouchableOpacity, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useState } from 'react';
+import { TouchableOpacity, StyleSheet, Text, TextInput, View, Alert } from 'react-native';
+import auth from '@react-native-firebase/auth';
 
 export default function Auth() {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  function handleLogin() {
+    setIsLoading(true);
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        Alert.alert("Login", 'User account created & signed in!');
+      })
+      .catch(error => Alert.alert("Login", error.message))
+      .finally(() => setIsLoading(false));
+  }
+
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
@@ -10,13 +28,13 @@ export default function Auth() {
       <View style={styles.container}>
         <View style={styles.field}>
           <Text style={styles.label}>E-mail:</Text>
-          <TextInput placeholder="example@gmail.com" style={styles.input} />
+          <TextInput onChangeText={setEmail} placeholder="example@gmail.com" style={styles.input} />
         </View>
         <View style={styles.field}>
           <Text style={styles.label}>Senha:</Text>
-          <TextInput placeholder="******" style={styles.input} />
+          <TextInput onChangeText={setPassword} placeholder="******" style={styles.input} />
         </View>
-        <TouchableOpacity onPress={() => { alert('Login efetuado com sucesso!') }} style={{ width: '75%', borderRadius: 8, alignItems: 'center', padding: 10, backgroundColor: '#111', marginTop: 10 }}>
+        <TouchableOpacity onPress={handleLogin} style={{ width: '75%', borderRadius: 8, alignItems: 'center', padding: 10, backgroundColor: '#111', marginTop: 10 }}>
           <Text style={{ color: '#fff', fontSize: 20 }}>Entrar</Text>
         </TouchableOpacity>
       </View>
