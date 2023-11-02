@@ -17,8 +17,9 @@ export default function MenuItem({ text, onPress }: Props) {
 const styles = StyleSheet.create({
     button: {
         padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#000',
+        width: '100%',
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        paddingHorizontal: 20,
     },
     text: {
         color: '#000',

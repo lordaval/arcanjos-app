@@ -1,8 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { auth } from '../../firebase';
+import { ActivityIndicator, Alert, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import app from '../../firebase';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth'
+
+const auth = getAuth(app);
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -14,7 +16,7 @@ export default function Login() {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user
-        alert('Login efetuado com sucesso')
+        console.log(user.email)
       })
       .catch((error) => {
         alert(error.message)
@@ -25,22 +27,19 @@ export default function Login() {
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
-        <Text style={{ color: '#000', fontSize: 30, fontWeight: 'bold' }}>Arcanjos Motoclube</Text>
-      </View>
-      <View style={styles.container}>
+        <Image source={require('../../assets/arcanjos-logo.png')} style={{ width: 200, height: 200 }} />
         <View style={styles.field}>
           <Text style={styles.label}>E-mail:</Text>
-          <TextInput onChangeText={setEmail} placeholder="example@gmail.com" style={styles.input} />
+          <TextInput onChangeText={setEmail} placeholderTextColor={'#555'} placeholder="example@gmail.com" style={styles.input} />
         </View>
         <View style={styles.field}>
           <Text style={styles.label}>Senha:</Text>
-          <TextInput onChangeText={setPassword} secureTextEntry placeholder="******" style={styles.input} />
+          <TextInput onChangeText={setPassword} placeholderTextColor={'#555'} secureTextEntry placeholder="******" style={styles.input} />
         </View>
-        <TouchableOpacity onPress={handleLogin} style={{ width: '60%', borderRadius: 8, alignItems: 'center', padding: 10, backgroundColor: '#111', marginTop: 10 }}>
-          {isLoading ? <ActivityIndicator color={'#fff'} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}/> : <Text style={{ color: '#fff', fontSize: 20 }}>Entrar</Text>}
+        <TouchableOpacity onPress={handleLogin} style={{ width: '60%', borderRadius: 8, alignItems: 'center', padding: 10, backgroundColor: '#fff', marginTop: 10, height: 50 }}>
+          {isLoading ? <ActivityIndicator size={24} color={'#000'} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}/> : <Text style={{ color: '#000', fontSize: 20, fontWeight: 'bold' }}>Entrar</Text>}
         </TouchableOpacity>
       </View>
-      <StatusBar style="auto" />
     </View>
   );
 }
@@ -49,7 +48,7 @@ export default function Login() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#d9d9d9',
+    backgroundColor: '#111',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -67,17 +66,19 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     gap: 4,
-    width: '60%',
+    width: '85%',
   },
   label: {
-    fontSize: 14,
+    fontSize: 16,
+    color: '#ffffff',
   },
   input: {
-    borderWidth: 1,
-    padding: 10,
+    backgroundColor: '#272727',
+    padding: 16,
     width: '100%',
-    height: 36,
-    borderRadius: 2,
-    fontSize: 12,
+    borderRadius: 5,
+    fontSize: 14,
+    color: '#fff',
+    height: 50,
   }
 });
