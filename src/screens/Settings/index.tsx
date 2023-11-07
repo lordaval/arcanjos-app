@@ -1,10 +1,8 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, SafeAreaView, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
-import app from '../../../firebase'
-import { getAuth, signOut } from 'firebase/auth'
+import { auth } from '../../../firebase'
+import { signOut } from 'firebase/auth'
 import MenuItem from '../../components/MenuItem'
-
-const auth = getAuth(app)
 
 const Settings = () => {
 
@@ -17,19 +15,20 @@ const Settings = () => {
     }
 
   return (
-    <View style={styles.screen}>
+    <SafeAreaView style={styles.screen}>
       <View style={styles.header}>
         <Text style={styles.title}>Ações</Text>
       </View>
       <MenuItem text="Criar novo usuário" onPress={showUserInfo} />
       <MenuItem text="Sair" onPress={logOut} />
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    paddingTop: 20,
     backgroundColor: '#fff',
     alignItems: 'center',
   },

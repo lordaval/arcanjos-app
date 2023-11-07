@@ -1,20 +1,21 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, SafeAreaView, Text, StyleSheet } from 'react-native'
 import React from 'react'
 
 export default function Dashboard () {
   return (
-    <View style={styles.screen}>
+    <SafeAreaView style={styles.screen}>
       <View style={styles.header}>
         <Text style={styles.title}>Bem-Vindo!</Text>
       </View>
       <Text>Home</Text>
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    paddingTop: 20,
     backgroundColor: '#fff',
     alignItems: 'center',
   },

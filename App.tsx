@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react';
 import MainRoutes from './src/routes';
 import Login from './src/screens/Login';
-import app from './firebase';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import {ActivityIndicator} from 'react-native';
+import { auth } from './firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
-const auth = getAuth(app);
-
 export default function App() {
-  
+
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
   useEffect(() => {

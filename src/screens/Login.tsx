@@ -1,10 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, Alert, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import app from '../../firebase';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
-
-const auth = getAuth(app);
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -37,7 +34,7 @@ export default function Login() {
           <TextInput onChangeText={setPassword} placeholderTextColor={'#555'} secureTextEntry placeholder="******" style={styles.input} />
         </View>
         <TouchableOpacity onPress={handleLogin} style={{ width: '60%', borderRadius: 8, alignItems: 'center', padding: 10, backgroundColor: '#fff', marginTop: 10, height: 50 }}>
-          {isLoading ? <ActivityIndicator size={24} color={'#000'} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}/> : <Text style={{ color: '#000', fontSize: 20, fontWeight: 'bold' }}>Entrar</Text>}
+          {isLoading ? <ActivityIndicator size={24} color={'#000'} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} /> : <Text style={{ color: '#000', fontSize: 20, fontWeight: 'bold' }}>Entrar</Text>}
         </TouchableOpacity>
       </View>
     </View>
