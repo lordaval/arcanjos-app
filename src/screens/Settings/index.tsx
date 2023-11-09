@@ -1,18 +1,21 @@
-import { View, SafeAreaView, Text, TouchableOpacity, StyleSheet } from 'react-native'
-import React from 'react'
+import { View, SafeAreaView, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native'
+import { useState } from 'react'
 import { auth } from '../../../firebase'
 import { signOut } from 'firebase/auth'
 import MenuItem from '../../components/MenuItem'
+import CriarUsuario from '../CriarUsuario'
 
 const Settings = () => {
 
-    function logOut() {
-      signOut(auth)
-    }
+  const [showModal, setShowModal] = useState<boolean>(false)
 
-    function showUserInfo() {
-      alert(auth.currentUser?.email)
-    }
+  function logOut() {
+    signOut(auth)
+  }
+
+  function showUserInfo() {
+    setShowModal(true)
+  }
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -21,6 +24,9 @@ const Settings = () => {
       </View>
       <MenuItem text="Criar novo usuário" onPress={showUserInfo} />
       <MenuItem text="Sair" onPress={logOut} />
+      <Modal visible={showModal} onRequestClose={() => setShowModal(false)} animationType='slide'>
+        <CriarUsuario closeFuncttion={() => setShowModal(false)} />
+      </Modal>
     </SafeAreaView>
   )
 }

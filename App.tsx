@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import MainRoutes from './src/routes';
 import Login from './src/screens/Login';
 import { auth } from './firebase';
@@ -6,6 +6,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { UserProvider } from './src/contexts/User';
+import * as SplashScreen from 'expo-splash-screen';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
@@ -21,6 +22,7 @@ export default function App() {
 
     return subscribe;
   }, []);
+
 
   return (
     <>

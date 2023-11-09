@@ -5,7 +5,7 @@ import { collection, addDoc } from 'firebase/firestore'
 import { useState } from 'react';
 import SelectInput from '../components/SelectInput';
 
-export default function CriarUsuario() {
+export default function CriarUsuario({closeFuncttion}: {closeFuncttion: any}) {
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -13,10 +13,9 @@ export default function CriarUsuario() {
     const [isLoading, setIsLoading] = useState(false);
 
     const cargosArray = [
-        { cargo: "Gerente", id: 1 },
+        { cargo: "Secretário", id: 1 },
         { cargo: "Vendedor", id: 2 },
         { cargo: "Presidente", id: 3 },
-        { cargo: "Cliente", id: 4 },
     ]
 
     function handleRegister() {
@@ -28,12 +27,16 @@ export default function CriarUsuario() {
             .then((userCredential) => {
                 const user = userCredential.user
                 console.log(user.email)
-                addDoc(collection(firestore, 'users'), {
+                addDoc(collection(firestore, 'usuarios'), {
                     nome: nome,
                     email: email,
                     cargo: cargo
                 }).then(() => {
                     alert('Usuário criado com sucesso')
+                    setNome("")
+                    setEmail("")
+                    setPassword("")
+                    setCargo("")
                 }).catch((error) => {
                     alert(error.message)
                 })
@@ -60,6 +63,11 @@ export default function CriarUsuario() {
 
     return (
         <View style={styles.screen}>
+            <View style={{width: "100%", padding: 20, marginBottom: 40}}>
+                <TouchableOpacity onPress={closeFuncttion}>
+                    <Text style={{ color: "#fff", fontWeight: "bold" }}>Voltar</Text>
+                </TouchableOpacity>
+            </View>
             <View style={styles.container}>
                 <Image source={require('../../assets/arcanjos-logo.png')} style={{ width: 200, height: 200 }} />
                 <View style={styles.field}>
@@ -69,10 +77,10 @@ export default function CriarUsuario() {
                 <View style={styles.field}>
                     <Text style={styles.label}>Cargo:</Text>
                     <SelectInput
-                    placeholder="Selecione um cargo..."
-                    options={cargosArray}
-                    onValueChange={setCargo}
-                    value={cargo}
+                        placeholder="Selecione um cargo..."
+                        options={cargosArray}
+                        onValueChange={setCargo}
+                        value={cargo}
                     />
                 </View>
                 <View style={styles.field}>
@@ -97,7 +105,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#111',
         alignItems: 'center',
-        justifyContent: 'center',
     },
     container: {
         width: '100%',
@@ -127,5 +134,8 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#fff',
         height: 50,
+    },
+    closeButton: {
+        color: "#fff",
     }
 });

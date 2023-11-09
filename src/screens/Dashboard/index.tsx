@@ -12,10 +12,8 @@ export default function Dashboard() {
       <View style={styles.header}>
         <Text style={styles.title}>Bem-Vindo!</Text>
       </View>
-      <Text>Home</Text>
-      <Text>Email: {auth.currentUser?.email}</Text>
-      <Text>Nome: {userData?.nome}</Text>
-      <Text>Cargo: {userData?.cargo}</Text>
+      <Text>Olá, {userData?.nome}</Text>
+      <Text>Seu Cargo: {userData?.cargo}</Text>
     </SafeAreaView>
   )
 }
@@ -36,5 +34,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-  }
+  },
+  
 })

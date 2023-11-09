@@ -16,8 +16,8 @@ export const UserProvider = ({ children }: {children: React.ReactNode}) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const usersCollection = collection(firestore, "users");
-      const queryByEmail = query(usersCollection, where("email", "==", auth.currentUser?.email));
+      const usuariosCollection = collection(firestore, "usuarios");
+      const queryByEmail = query(usuariosCollection, where("email", "==", auth.currentUser?.email));
     
       const querySnapshot = await getDocs(queryByEmail);
 
