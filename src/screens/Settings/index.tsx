@@ -25,7 +25,7 @@ const Settings = () => {
       <MenuItem text="Criar novo usuário" onPress={showUserInfo} />
       <MenuItem text="Sair" onPress={logOut} />
       <Modal visible={showModal} onRequestClose={() => setShowModal(false)} animationType='slide'>
-        <CriarUsuario closeFuncttion={() => setShowModal(false)} />
+        <CriarUsuario closeFunction={() => setShowModal(false)} />
       </Modal>
     </SafeAreaView>
   )

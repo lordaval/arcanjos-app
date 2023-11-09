@@ -5,7 +5,7 @@ import { collection, addDoc } from 'firebase/firestore'
 import { useState } from 'react';
 import SelectInput from '../components/SelectInput';
 
-export default function CriarUsuario({closeFuncttion}: {closeFuncttion: any}) {
+export default function CriarUsuario({closeFunction}: {closeFunction?: any}) {
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -64,7 +64,7 @@ export default function CriarUsuario({closeFuncttion}: {closeFuncttion: any}) {
     return (
         <View style={styles.screen}>
             <View style={{width: "100%", padding: 20, marginBottom: 40}}>
-                <TouchableOpacity onPress={closeFuncttion}>
+                <TouchableOpacity onPress={closeFunction}>
                     <Text style={{ color: "#fff", fontWeight: "bold" }}>Voltar</Text>
                 </TouchableOpacity>
             </View>
