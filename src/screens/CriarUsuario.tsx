@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#111',
         alignItems: 'center',
+        paddingTop: 20,
     },
     container: {
         width: '100%',
