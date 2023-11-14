@@ -5,7 +5,7 @@ import { auth } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { UserProvider } from './src/contexts/User';
+import Provider from './src/contexts/Provider';
 import * as SplashScreen from 'expo-splash-screen';
 
 export default function App() {
@@ -29,9 +29,9 @@ export default function App() {
       {isLoggedIn === null ? (
         <ActivityIndicator size={50} color={'#000'} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />
       ) : isLoggedIn ? (
-        <UserProvider>
+        <Provider>
           <MainRoutes />
-        </UserProvider>
+        </Provider>
       ) : (
         <Login />
       )}
