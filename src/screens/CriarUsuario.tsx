@@ -13,9 +13,11 @@ export default function CriarUsuario({closeFunction}: {closeFunction?: any}) {
     const [isLoading, setIsLoading] = useState(false);
 
     const cargosArray = [
-        { cargo: "Secretário", id: 1 },
-        { cargo: "Vendedor", id: 2 },
-        { cargo: "Presidente", id: 3 },
+        { cargo: "CAIXA", id: 1 },
+        { cargo: "VENDEDOR", id: 2 },
+        { cargo: "PRESIDENTE", id: 3 },
+        { cargo: "TESOUREIRO", id: 4 },
+        { cargo: "DIRETOR DE BASE", id: 5 },
     ]
 
     function handleRegister() {

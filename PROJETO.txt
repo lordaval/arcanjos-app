@@ -1,2 +1,55 @@
 Arcanjos App
 
+Estoque:
+Inserção de produtos
+Listagem de produtos
+Alteração de produtos
+Exclusão de produtos
+
+Eventos:
+Definir data e hora do evento
+Listar eventos
+Quando for o evento, iniciar o evento
+Manutenção - Caixa aberta
+Alterar Estoque
+
+Cargos:
+Presidente - Tudo
+Tesoureiro - Ver relatório, andamento e etc
+Vendedor (Bar e Cozinha) - A partir da venda, entrega o determinado produto
+Caixa - Efetua vendas e etc
+Diretor de Base - Cadastro de Produtos no Estoque, edição de eventos, etc...
+
+A cada evento, o caixa é aberto e fechado
+Com o dinheiro arrecadado durante um evento, tem que calcular o lucro, e o que sobrar, pensar nas despesas adicionais
+
+
+===================================================================
+
+Estoque:
+
+Considerar uma interface intuitiva para a inserção, listagem, alteração e exclusão de produtos.
+Implementar validações para garantir dados corretos ao adicionar ou alterar produtos.
+Rastreamento de histórico de alterações para o estoque, mantendo um registro das modificações feitas.
+
+Eventos:
+
+Criar um sistema de calendário para facilitar a definição de datas e horas para os eventos.
+Permitir a associação de produtos do estoque aos eventos, para uma gestão mais integrada.
+Automatizar o processo de início do evento na data e hora definidos.
+Na manutenção do caixa aberto, registrar todas as transações financeiras realizadas durante o evento.
+
+Cargos e Permissões:
+
+Estabelecer diferentes níveis de acesso com base nos cargos especificados.
+Garantir que cada função tenha acesso apenas às áreas relevantes do aplicativo, conforme suas responsabilidades.
+Criar um painel de controle administrativo para gerenciar permissões e usuários.
+
+Fluxo Financeiro:
+
+Desenvolver um módulo para registrar todas as transações financeiras, permitindo o cálculo de lucro por evento.
+Implementar um sistema para calcular despesas adicionais e manter um controle claro do saldo.
+
+Segurança:
+
+Priorizar a segurança dos dados e transações, implementando medidas como autenticação segura, criptografia e backups regulares.

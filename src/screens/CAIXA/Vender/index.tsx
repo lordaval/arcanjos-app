@@ -6,60 +6,62 @@ import {
   TextInput,
   Image,
   FlatList,
+  Touchable,
   TouchableOpacity,
 } from "react-native";
 import React from "react";
 import { Search } from "lucide-react-native";
+import Card from "./Card";
 
-export default function Estoque() {
+export default function Vender() {
   const fakeData = [
     {
       id: 1,
       name: "Heineken",
-      description: "Card",
-      image: require("../../assets/images/teste.png"),
+      price: 6.5,
+      image: require("../../../assets/images/teste.png"),
     },
     {
       id: 2,
       name: "Brahma",
-      description: "Card",
-      image: require("../../assets/images/teste.png"),
+      price: 89,
+      image: require("../../../assets/images/teste.png"),
     },
     {
       id: 3,
       name: "Skol",
-      description: "Card",
-      image: require("../../assets/images/teste.png"),
+      price: 89,
+      image: require("../../../assets/images/teste.png"),
     },
     {
       id: 4,
       name: "Antártica",
-      description: "Card",
-      image: require("../../assets/images/teste.png"),
+      price: 89,
+      image: require("../../../assets/images/teste.png"),
     },
     {
       id: 5,
       name: "Pitoresca",
-      description: "Card",
-      image: require("../../assets/images/teste.png"),
+      price: 89,
+      image: require("../../../assets/images/teste.png"),
     },
     {
       id: 6,
       name: "51",
-      description: "Card",
-      image: require("../../assets/images/teste.png"),
+      price: 89,
+      image: require("../../../assets/images/teste.png"),
     },
     {
       id: 7,
       name: "Putaria",
-      description: "Card",
-      image: require("../../assets/images/teste.png"),
+      price: 89,
+      image: require("../../../assets/images/teste.png"),
     },
     {
       id: 8,
       name: "Sei lá",
-      description: "Card",
-      image: require("../../assets/images/teste.png"),
+      price: 89,
+      image: require("../../../assets/images/teste.png"),
     },
   ];
 
@@ -70,9 +72,7 @@ export default function Estoque() {
     setSearch(text);
     if (text) {
       const newData = fakeData.filter((item) => {
-        const itemData = item.name
-          ? item.name.toUpperCase()
-          : "".toUpperCase();
+        const itemData = item.name ? item.name.toUpperCase() : "".toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -88,6 +88,9 @@ export default function Estoque() {
         <Text style={styles.title}>Vender</Text>
       </View>
       <View style={{ flex: 1 }}>
+        <View style={styles.header2}>
+          <Text style={styles.subTitle}>Vendas recentes</Text>
+        </View>
         <View style={styles.main}>
           <View style={styles.searchInputView}>
             <Search size={24} color="#000" />
@@ -102,31 +105,13 @@ export default function Estoque() {
             data={filteredData}
             contentContainerStyle={styles.cardContainer}
             renderItem={({ item }) => (
-              <Card
-                name={item.name}
-                description={item.description}
-                image={item.image}
-              />
+              <Card name={item.name} price={item.price} image={item.image} />
             )}
             keyExtractor={(item) => item.id.toString()}
           />
         </View>
       </View>
     </SafeAreaView>
-  );
-}
-
-function Card({ name, description, image }: any) {
-  return (
-    <TouchableOpacity
-      onLongPress={() => console.log("Long Press")}
-      onPress={() => console.log("Press")}
-      style={styles.card}
-    >
-      <Image source={image} style={styles.cardImage} />
-      <Text style={styles.cardTitle}>{name}</Text>
-      <Text style={styles.cardDescription}>{description}</Text>
-    </TouchableOpacity>
   );
 }
 
@@ -185,29 +170,5 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-around",
     padding: 16,
-  },
-  card: {
-    width: "100%",
-    backgroundColor: "#fff",
-    paddingVertical: 16,
-    paddingHorizontal: 26,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
-    marginBottom: 16,
-  },
-  cardImage: {
-    width: 100,
-    height: 100,
-    resizeMode: "contain",
-  },
-  cardTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  cardDescription: {
-    fontSize: 14,
-    textAlign: "center",
   },
 });

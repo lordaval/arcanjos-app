@@ -22,7 +22,7 @@ export default function VendedorRoutes() {
             >
                 <Tab.Screen name="Dashboard" options={{ tabBarIcon: ({ focused, color, size }) => focused ? <Ionicons name="disc" size={size} color={color} /> : <Ionicons name="disc-outline" size={size} color={color} /> }} component={Dashboard} />
                 <Tab.Screen name="Estoque" options={{ tabBarIcon: ({ focused, color, size }) => focused ? <Ionicons name="boat" size={size} color={color} /> : <Ionicons name="boat-outline" size={size} color={color} /> }} component={Estoque} />
-                <Tab.Screen name="Criar Usuário" options={{ tabBarIcon: ({ focused, color, size }) => focused ? <Ionicons name="create" size={size} color={color} /> : <Ionicons name="create-outline" size={size} color={color} /> }} component={CriarUsuario} />
+                <Tab.Screen name="Vendas" options={{ tabBarIcon: ({ focused, color, size }) => focused ? <Ionicons name="boat" size={size} color={color} /> : <Ionicons name="boat-outline" size={size} color={color} /> }} component={Estoque} />
                 <Tab.Screen name="Configurações" options={{ tabBarIcon: ({ focused, color, size }) => focused ? <Ionicons name="settings" size={size} color={color} /> : <Ionicons name="settings-outline" size={size} color={color} /> }} component={Settings} />
             </Tab.Navigator>
         </NavigationContainer>
