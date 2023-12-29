@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React from "react";
-import { Search } from "lucide-react-native";
+import { Check, Search } from "lucide-react-native";
 import Card from "./Card";
 
 export default function Vender() {
@@ -68,6 +68,8 @@ export default function Vender() {
   const [search, setSearch] = React.useState("");
   const [filteredData, setFilteredData] = React.useState(fakeData);
 
+  const [selectedItems, setSelectedItems] = React.useState<string[]>([]);
+
   function handleSearch(text: string) {
     setSearch(text);
     if (text) {
@@ -80,6 +82,14 @@ export default function Vender() {
     } else {
       setFilteredData(fakeData);
     }
+  }
+
+  function selectedOk(id?: string | any) {
+    if (typeof id === "string") {
+      console.log(id);
+    } else console.log(selectedItems)
+
+    setSelectedItems([]);
   }
 
   return (
@@ -105,10 +115,23 @@ export default function Vender() {
             data={filteredData}
             contentContainerStyle={styles.cardContainer}
             renderItem={({ item }) => (
-              <Card name={item.name} price={item.price} image={item.image} />
+              <Card
+                nextFunction={selectedOk}
+                selectedItems={selectedItems}
+                setSelectedItems={setSelectedItems}
+                name={item.name}
+                price={item.price}
+                image={item.image}
+                id={item.id.toString()}
+              />
             )}
             keyExtractor={(item) => item.id.toString()}
           />
+          {selectedItems.length > 0 && (
+            <TouchableOpacity style={styles.confirmButton} onPress={selectedOk}>
+              <Check size={24} color="#fff" />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </SafeAreaView>
@@ -170,5 +193,25 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-around",
     padding: 16,
+  },
+  confirmButton: {
+    backgroundColor: "#000",
+    padding: 16,
+    borderRadius: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    bottom: 16,
+    right: 26,
+    width: 60,
+    height: 60,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
 });
