@@ -8,89 +8,63 @@ import {
   FlatList,
   Touchable,
   TouchableOpacity,
+  Modal,
+  ActivityIndicator,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Check, Search } from "lucide-react-native";
 import Card from "./Card";
+import ConfirmScreen from "./ConfirmScreen";
+import { firestore } from "../../../../firebase";
+import { collection, getDocs, onSnapshot } from "firebase/firestore";
+import { getProdutos } from "../../../API/Produtos";
+import Produto from "../../../@types/Produto";
 
 export default function Vender() {
-  const fakeData = [
-    {
-      id: 1,
-      name: "Heineken",
-      price: 6.5,
-      image: require("../../../assets/images/teste.png"),
-    },
-    {
-      id: 2,
-      name: "Brahma",
-      price: 89,
-      image: require("../../../assets/images/teste.png"),
-    },
-    {
-      id: 3,
-      name: "Skol",
-      price: 89,
-      image: require("../../../assets/images/teste.png"),
-    },
-    {
-      id: 4,
-      name: "Antártica",
-      price: 89,
-      image: require("../../../assets/images/teste.png"),
-    },
-    {
-      id: 5,
-      name: "Pitoresca",
-      price: 89,
-      image: require("../../../assets/images/teste.png"),
-    },
-    {
-      id: 6,
-      name: "51",
-      price: 89,
-      image: require("../../../assets/images/teste.png"),
-    },
-    {
-      id: 7,
-      name: "Putaria",
-      price: 89,
-      image: require("../../../assets/images/teste.png"),
-    },
-    {
-      id: 8,
-      name: "Sei lá",
-      price: 89,
-      image: require("../../../assets/images/teste.png"),
-    },
-  ];
+  useEffect(() => {
+    async function fetchData() {
+      const products: Produto[] = await getProdutos();
+      console.log(products);
+      setProductsData(products);
+      setFilteredData(products);
+    }
+    fetchData();
+  }, []);
 
-  const [search, setSearch] = React.useState("");
-  const [filteredData, setFilteredData] = React.useState(fakeData);
-
-  const [selectedItems, setSelectedItems] = React.useState<string[]>([]);
+  const [search, setSearch] = useState("");
+  const [productsData, setProductsData] = useState<Produto[]>([]);
+  const [filteredData, setFilteredData] = useState(productsData);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   function handleSearch(text: string) {
     setSearch(text);
     if (text) {
-      const newData = fakeData.filter((item) => {
-        const itemData = item.name ? item.name.toUpperCase() : "".toUpperCase();
+      const newData = productsData.filter((item) => {
+        const itemData = item.nome ? item.nome.toUpperCase() : "".toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
       setFilteredData(newData);
     } else {
-      setFilteredData(fakeData);
+      setFilteredData(productsData);
     }
   }
 
   function selectedOk(id?: string | any) {
     if (typeof id === "string") {
       console.log(id);
-    } else console.log(selectedItems)
-
-    setSelectedItems([]);
+      setOpen(true);
+    } else {
+      console.log(selectedItems);
+      setOpen(true);
+    }
   }
+
+  useEffect(() => {
+    console.log(productsData);
+  }, [productsData]);
+
+  const [open, setOpen] = useState(false);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -111,28 +85,41 @@ export default function Vender() {
               style={styles.searchInput}
             />
           </View>
-          <FlatList
-            data={filteredData}
-            contentContainerStyle={styles.cardContainer}
-            renderItem={({ item }) => (
-              <Card
-                nextFunction={selectedOk}
-                selectedItems={selectedItems}
-                setSelectedItems={setSelectedItems}
-                name={item.name}
-                price={item.price}
-                image={item.image}
-                id={item.id.toString()}
-              />
-            )}
-            keyExtractor={(item) => item.id.toString()}
-          />
+          {filteredData.length === 0 ? (
+            <ActivityIndicator size="large" />
+          ) : (
+            <FlatList
+              data={filteredData}
+              contentContainerStyle={styles.cardContainer}
+              numColumns={2}
+              columnWrapperStyle={{ gap: 10 }}
+              renderItem={({ item }) => (
+                <Card
+                  nextFunction={selectedOk}
+                  selectedItems={selectedItems}
+                  setSelectedItems={setSelectedItems}
+                  name={item.nome}
+                  price={item.valor}
+                  image={item.imagem}
+                  id={item.id}
+                />
+              )}
+              keyExtractor={(item) => item.id}
+            />
+          )}
           {selectedItems.length > 0 && (
             <TouchableOpacity style={styles.confirmButton} onPress={selectedOk}>
               <Check size={24} color="#fff" />
             </TouchableOpacity>
           )}
         </View>
+        <Modal
+          visible={open}
+          onRequestClose={() => setOpen(false)}
+          animationType="slide"
+        >
+          <ConfirmScreen id={selectedItems} />
+        </Modal>
       </View>
     </SafeAreaView>
   );
@@ -189,10 +176,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   cardContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
     padding: 16,
+    alignItems: "center",
+    justifyContent: "center",
   },
   confirmButton: {
     backgroundColor: "#000",

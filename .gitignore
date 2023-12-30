@@ -16,8 +16,6 @@ web-build/
 *.key
 *.mobileprovision
 
-./firebase.ts
-
 # Metro
 .metro-health-check*
 
