@@ -1,20 +1,26 @@
-import { View, SafeAreaView, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native'
-import { useState } from 'react'
-import { auth } from '../../../firebase'
-import { signOut } from 'firebase/auth'
-import MenuItem from '../../components/MenuItem'
-import CriarUsuario from '../CriarUsuario'
+import {
+  View,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Modal,
+} from "react-native";
+import { useState } from "react";
+import { auth } from "../../../firebase";
+import { signOut } from "firebase/auth";
+import MenuItem from "../../components/MenuItem";
+import CriarUsuario from "../CriarUsuario";
 
 const Settings = () => {
-
-  const [showModal, setShowModal] = useState<boolean>(false)
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   function logOut() {
-    signOut(auth)
+    signOut(auth);
   }
 
   function showUserInfo() {
-    setShowModal(true)
+    setShowModal(true);
   }
 
   return (
@@ -24,24 +30,28 @@ const Settings = () => {
       </View>
       <MenuItem text="Criar novo usuário" onPress={showUserInfo} />
       <MenuItem text="Sair" onPress={logOut} />
-      <Modal visible={showModal} onRequestClose={() => setShowModal(false)} animationType='slide'>
+      <Modal
+        visible={showModal}
+        onRequestClose={() => setShowModal(false)}
+        animationType="slide"
+      >
         <CriarUsuario closeFunction={() => setShowModal(false)} />
       </Modal>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
     paddingTop: 20,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
   },
   header: {
-    width: '100%',
+    width: "100%",
     padding: 16,
-    alignItems: 'flex-start',
+    alignItems: "flex-start",
     // shadowColor: '#000',
     // shadowOffset: { width: 0, height: 1,  },
     // shadowOpacity: 0.25,
@@ -49,9 +59,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  }
-})
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+});
 
-export default Settings
+export default Settings;

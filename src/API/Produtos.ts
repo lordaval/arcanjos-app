@@ -1,12 +1,16 @@
-import { firestore } from "../../firebase";
+import { firestore, storage } from "../../firebase";
 import {
+  addDoc,
   collection,
+  doc,
   getDocs,
   onSnapshot,
   query,
+  setDoc,
   where,
 } from "firebase/firestore";
 import Produto from "../@types/Produto";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export async function getProdutos(): Promise<Produto[]> {
   let productss: Produto[] = [];
@@ -35,10 +39,45 @@ export async function getOneProduto(id: string): Promise<Produto | undefined> {
   const productDoc = querySnapshot.docs.find((doc) => doc.id === id);
   if (productDoc) {
     const product = productDoc.data();
-    console.log(product);
     return product as Produto;
   } else {
     console.log("Produto não encontrado");
     return undefined;
+  }
+}
+
+export async function createProduto(
+  descricao: string,
+  nome: string,
+  quantidade: number,
+  tipo: "COMIDA" | "BEBIDA",
+  valor: number,
+  imagem: File
+) {
+  try {
+    const productCollection = collection(firestore, "produtos");
+
+    const newProduct = {
+      nome,
+      valor,
+      descricao,
+      quantidade,
+      tipo,
+    };
+
+    const docRef = await addDoc(productCollection, newProduct);
+    console.log("Document written with ID: ", docRef.id);
+
+    const storageRef = ref(storage, `produtos/${docRef.id}/${imagem.name}`);
+    const snapshot = await uploadBytes(storageRef, imagem);
+    const imageURL = await getDownloadURL(snapshot.ref);
+
+    const productDocRef = doc(firestore, "produtos", docRef.id);
+
+    await setDoc(productDocRef, { imagem: imageURL }, { merge: true });
+
+    console.log("Image URL added to product document: ", imageURL);
+  } catch (error) {
+    console.error("Error creating produto:", error);
   }
 }
