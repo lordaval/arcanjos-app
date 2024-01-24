@@ -24,7 +24,6 @@ export default function Vender() {
   useEffect(() => {
     async function fetchData() {
       const products: Produto[] = await getProdutos();
-      console.log(products);
       setProductsData(products);
       setFilteredData(products);
     }
@@ -52,17 +51,11 @@ export default function Vender() {
 
   function selectedOk(id?: string | any) {
     if (typeof id === "string") {
-      console.log(id);
       setOpen(true);
     } else {
-      console.log(selectedItems);
       setOpen(true);
     }
   }
-
-  useEffect(() => {
-    console.log(productsData);
-  }, [productsData]);
 
   const [open, setOpen] = useState(false);
 

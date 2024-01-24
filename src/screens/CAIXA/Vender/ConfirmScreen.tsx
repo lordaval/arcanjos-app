@@ -26,7 +26,6 @@ export default function ConfirmScreen({ id }: { id: string | string[] }) {
           }
           return [...prevState, product];
         });
-        console.log("getOneProduto(id)", await getOneProduto(id));
       });
     } else {
       const product: Produto = (await getOneProduto(id)) as Produto;
@@ -36,7 +35,6 @@ export default function ConfirmScreen({ id }: { id: string | string[] }) {
         }
         return [product];
       });
-      console.log("getOneProduto(id)", await getOneProduto(id));
     }
   }
 
@@ -86,10 +84,7 @@ function ItemCard({
 }) {
   return (
     <View style={styles.ItemCard}>
-      <Image
-        style={styles.ItemCardImage}
-        source={require("../../../assets/images/teste.png")}
-      />
+      <Image style={styles.ItemCardImage} source={{ uri: imageUrl }} />
       <Text style={styles.ItemCardName}>{name}</Text>
       <Text style={styles.ItemCardDetail}>Preço (fixo)</Text>
       <Text style={styles.ItemCardDetail}>

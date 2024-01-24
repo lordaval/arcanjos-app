@@ -21,14 +21,11 @@ export async function getProdutos(): Promise<Produto[]> {
       querySnapshot.forEach((doc) => {
         products.push({ ...doc.data(), id: doc.id });
       });
-      console.log("products", products);
       productss = products;
-      console.log("productss", productss);
       resolve(productss);
       return productss;
     });
   });
-  console.log("productss", productss);
   return productss;
 }
 
@@ -41,7 +38,6 @@ export async function getOneProduto(id: string): Promise<Produto | undefined> {
     const product = productDoc.data();
     return product as Produto;
   } else {
-    console.log("Produto não encontrado");
     return undefined;
   }
 }
@@ -66,7 +62,6 @@ export async function createProduto(
     };
 
     const docRef = await addDoc(productCollection, newProduct);
-    console.log("Document written with ID: ", docRef.id);
 
     const storageRef = ref(storage, `produtos/${docRef.id}/${imagem.name}`);
     const snapshot = await uploadBytes(storageRef, imagem);
@@ -75,8 +70,6 @@ export async function createProduto(
     const productDocRef = doc(firestore, "produtos", docRef.id);
 
     await setDoc(productDocRef, { imagem: imageURL }, { merge: true });
-
-    console.log("Image URL added to product document: ", imageURL);
   } catch (error) {
     console.error("Error creating produto:", error);
   }
